@@ -1,3 +1,4 @@
+from turtle import up
 from unittest.loader import defaultTestLoader
 
 import pygame
@@ -20,6 +21,13 @@ def main():
     clock = pygame.time.Clock()
     dt = 0.0
 
+    # Create Groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    # Add Player Class to both Groups
+    Player.containers = (updatable, drawable)
+
     # Instantiate Player at Center of the Screen
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
@@ -37,11 +45,12 @@ def main():
         # Fill the screen with Black Color
         screen.fill("black")
 
-        # Update the player position based on input
-        player.update(dt)
+        # Update the instances position based on input
+        updatable.update(dt)
 
-        # Draw / Render the player position
-        player.draw(screen)
+        # Draw / Render the instances position
+        for instance in drawable:
+            instance.draw(screen)
 
         # Refresh the screen
         pygame.display.flip()
