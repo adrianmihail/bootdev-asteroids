@@ -4,6 +4,7 @@ import pygame
 from constants import SCREEN_HEIGHT
 from constants import SCREEN_WIDTH
 from logger import log_state
+from player import Player
 
 def main():
     # Welcome screen
@@ -19,6 +20,9 @@ def main():
     clock = pygame.time.Clock()
     dt = 0.0
 
+    # Instantiate Player at Center of the Screen
+    player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+
     # Create Game Loop
     while True:
         # Log the state of the game
@@ -33,11 +37,16 @@ def main():
         # Fill the screen with Black Color
         screen.fill("black")
 
+        # Draw the player position
+        player.draw(screen)
+
         # Refresh the screen
         pygame.display.flip()
 
         # Calculate Delta Time
         dt = clock.tick(60) / 1000
+
+
 
 if __name__ == "__main__":
     main()
