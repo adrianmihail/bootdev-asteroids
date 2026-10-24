@@ -37,7 +37,10 @@ def main():
         # Fill the screen with Black Color
         screen.fill("black")
 
-        # Draw the player position
+        # Update the player position based on input
+        player.update(dt)
+
+        # Draw / Render the player position
         player.draw(screen)
 
         # Refresh the screen
