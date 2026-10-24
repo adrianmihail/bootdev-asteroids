@@ -1,3 +1,5 @@
+from unittest.loader import defaultTestLoader
+
 import pygame
 from constants import SCREEN_HEIGHT
 from constants import SCREEN_WIDTH
@@ -12,6 +14,10 @@ def main():
     # Init game
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
+
+    # Define FPS to draw 60 per second
+    clock = pygame.time.Clock()
+    dt = 0.0
 
     # Create Game Loop
     while True:
@@ -29,6 +35,9 @@ def main():
 
         # Refresh the screen
         pygame.display.flip()
+
+        # Calculate Delta Time
+        dt = clock.tick(60) / 1000
 
 if __name__ == "__main__":
     main()
