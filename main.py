@@ -6,6 +6,8 @@ from constants import SCREEN_HEIGHT
 from constants import SCREEN_WIDTH
 from logger import log_state
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main():
     # Welcome screen
@@ -24,12 +26,16 @@ def main():
     # Create Groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
-    # Add Player Class to both Groups
+    # Add Classes to Groups
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = updatable
 
     # Instantiate Player at Center of the Screen
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+    asteroidfield = AsteroidField()
 
     # Create Game Loop
     while True:
