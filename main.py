@@ -2,12 +2,15 @@ from turtle import up
 from unittest.loader import defaultTestLoader
 
 import pygame
+import sys
+
 from constants import SCREEN_HEIGHT
 from constants import SCREEN_WIDTH
 from logger import log_state
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from logger import log_event
 
 def main():
     # Welcome screen
@@ -53,6 +56,14 @@ def main():
 
         # Update the instances position based on input
         updatable.update(dt)
+
+        # Check if asteroids collide with player
+        # If yes, then end the game
+        for asteroid in asteroids:
+            if asteroid.collides_with(player):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
 
         # Draw / Render the instances position
         for instance in drawable:
