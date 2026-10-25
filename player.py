@@ -1,6 +1,6 @@
 import pygame
 from circleshape import CircleShape
-from constants import LINE_WIDTH, PLAYER_RADIUS, PLAYER_SHOOT_SPEED, PLAYER_SPEED, PLAYER_TURN_SPEED
+from constants import LINE_WIDTH, PLAYER_RADIUS, PLAYER_SHOOT_COOLDOWN_SECONDS, PLAYER_SHOOT_SPEED, PLAYER_SPEED, PLAYER_TURN_SPEED
 from shot import Shot
 
 class Player(CircleShape):
@@ -8,6 +8,7 @@ class Player(CircleShape):
     def __init__(self, x: float, y:float) -> None:
         super().__init__(x,y,PLAYER_RADIUS)
         self.rotation = 0
+        self.cooldown_timer = 0
 
     # Define the player body colision as a circle but looks like triangle
     def triangle(self) -> list[pygame.Vector2]:
@@ -41,9 +42,16 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.move(dt * -1)
 
-        # Shoot a bullet by pressing space
+        # Shoot a bullet by pressing space if cooldown is 0
         if keys[pygame.K_SPACE]:
-            self.shoot()
+            if self.cooldown_timer > 0:
+                pass
+            else:
+                self.shoot()
+                self.cooldown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
+
+        # Decrease the Cooldown based on time
+        self.cooldown_timer -= dt
 
     def move(self,dt: float) -> None:
         unit_vector = pygame.Vector2(0,1)

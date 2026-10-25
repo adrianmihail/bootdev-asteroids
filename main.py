@@ -68,6 +68,15 @@ def main():
                 print("Game over!")
                 sys.exit()
 
+        # Check if asteroid collides with shot
+        # if yes, then remove both asteroid and shot
+        for asteroid in asteroids:
+            for shot in shots:
+                if shot.collides_with(asteroid):
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    asteroid.kill()
+
         # Draw / Render the instances position
         for instance in drawable:
             instance.draw(screen)
